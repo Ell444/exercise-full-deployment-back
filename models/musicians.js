@@ -24,7 +24,7 @@ const schema = new Schema({
         trim: true
     },
     age: Number,
-}, timestamp);
+}, {timestamps: true});
 
 const Musician = model('Musician', schema);
 

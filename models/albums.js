@@ -12,7 +12,7 @@ const schema = new Schema({
         type: SchemaTypes.ObjectId,
         ref: "Musiscian"
     }
-});
+}, {timestamps: true});
 
 const Album = model('Album', schema);
 

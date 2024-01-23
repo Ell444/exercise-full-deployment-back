@@ -7,9 +7,6 @@ router.use(express.json());
 
 //Create a resource
 router.post('/', async (req, res) => {
-     if(!req.body){
-        return res.send('Insert a valid musician.')
-    }; 
     try {
         const musician = new Musician(req.body);
         await musician.save();
@@ -25,7 +22,7 @@ router.get('/', async(req, res) => {
         const musicians = await Musician.find();
         res.send(musicians);
     }catch(err){
-        res.status(500).send(err.message);
+        res.status(500).send('Server error.');
     };
 });
 
@@ -33,6 +30,9 @@ router.get('/', async(req, res) => {
 router.get('/:id', async(req, res) => {
     try {
         const musician = await Musician.findById(req.params.id);
+        if(!musician){
+            return res.status(404).send(`Musician with ID ${req.params.id} not found.`)
+        }
         res.send(musician);
     }catch(err){
         res.status(404).send(err.message);

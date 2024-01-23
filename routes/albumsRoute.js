@@ -25,7 +25,7 @@ router.get('/', async(req, res) => {
         const albums = await Album.find();
         res.send(albums);
     }catch(err){
-        res.status(500).send(err.message);
+        res.status(500).send('Server error.');
     };
 });
 
@@ -33,6 +33,9 @@ router.get('/', async(req, res) => {
 router.get('/:id', async(req, res) => {
     try {
         const album = await Album.findById(req.params.id);
+        if(!album){
+            return res.status(404).send(`Album with ID ${req.params.id} not found.`)
+        }
         res.send(album);
     }catch(err){
         res.status(404).send(err.message);
